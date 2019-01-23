@@ -2,7 +2,7 @@
 
 require_once 'databaseConnection.php';
 
-function InsertPost($commentaire, $dataType, $dataName, $date){
+function InsertPost($commentaire, $dataType, $dataName, $date) {
     try {
         $connect = myDatabase();
         $req = $connect->prepare('INSERT INTO `posts`(`commentaire`, `typeMedia`, `nomMedia`, `datePost`) VALUES (:commentaire, :dataType, :dataName, :date)');
@@ -15,4 +15,16 @@ function InsertPost($commentaire, $dataType, $dataName, $date){
     } catch (Exception $ex) {
         return FALSE;
     }
+}
+
+function GetAllPosts() {
+    try {
+        $connect = myDatabase();
+        $req = $connect->prepare("SELECT * FROM posts ORDER BY datePost DESC");
+        $req->execute();
+        $result = $req->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return FALSE;
+    }
+    return $result;
 }

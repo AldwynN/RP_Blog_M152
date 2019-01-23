@@ -4,6 +4,9 @@ Date : 23.01.2019
 Auteur : Romain Peretti
 Description : Cette page permettra d'afficher les informations de l'utilisateur ainsi que ce qu'il a publié (image/vidéos)
 -->
+<?php
+include './server/database/function.inc.php';
+?>
 <!DOCTYPE html>
 <html lang='fr'>
     <head>
@@ -22,10 +25,24 @@ Description : Cette page permettra d'afficher les informations de l'utilisateur 
             <image src='https://fr.cdn.v5.futura-sciences.com/buildsv6/images/mediumoriginal/6/5/2/652a7adb1b_98148_01-intro-773.jpg' alt='Photo de profil' height='70' width='110'>
             <h3>Romain Peretti</h3>
         </section>
-        
+
         <!-- Section pour le message d'accueil -->
         <section>
             <h1>Bienvenue sur ma page magnifique !</h1>
+        </section>
+
+        <!-- Section pour les posts de l'utilisateur -->
+        <section>
+            <?php
+            $posts = GetAllPosts();
+
+            foreach ($posts as $value) {
+                echo '<figure>'
+                . '<img src="uploads/' . $value['nomMedia'] . '" alt="Image du post" width="200" height="200" />'
+                . '<figcaption>' . $value['commentaire'] . '</figcaption>'
+                . '</figure>';
+            }
+            ?>
         </section>
     </body>
 </html>
