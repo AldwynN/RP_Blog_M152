@@ -5,16 +5,16 @@ Auteur : Romain Peretti
 Description : Cette page permettra d'afficher les informations de l'utilisateur ainsi que ce qu'il a publié (image/vidéos)
 -->
 <!DOCTYPE html>
-<html>
+<html lang='fr'>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Home</title>
     </head>
     <body>
         <nav>
             <ul>
                 <li><a href='#'>Home</a></li>
-                <li><a href='Post.php'>Post</a></li>
+                <li><a href='post.php'>Post</a></li>
             </ul>
         </nav>
         <!-- Section pour la photo de profile -->
