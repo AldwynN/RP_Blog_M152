@@ -2,14 +2,26 @@
 
 require_once 'databaseConnection.php';
 
-function InsertPost($commentaire, $dataType, $dataName, $date) {
+function InsertPost($commentaire, $date) {
     try {
         $connect = myDatabase();
-        $req = $connect->prepare('INSERT INTO `posts`(`commentaire`, `typeMedia`, `nomMedia`, `datePost`) VALUES (:commentaire, :dataType, :dataName, :date)');
+        $req = $connect->prepare('INSERT INTO `posts`(`commentaire`, `datePost`) VALUES (:commentaire, :date)');
         $req->bindParam(':commentaire', $commentaire, PDO::PARAM_STR);
-        $req->bindParam(':dataType', $dataType, PDO::PARAM_STR);
-        $req->bindParam(':dataName', $dataName, PDO::PARAM_INT);
         $req->bindParam(':date', $date);
+        $req->execute();
+        return TRUE;
+    } catch (Exception $ex) {
+        return FALSE;
+    }
+}
+
+function InsertMedia($nomFichier, $typeMedia, $idPost) {
+    try {
+        $connect = myDatabase();
+        $req = $connect->prepare('INSERT INTO `medias`(`nomFichierMedia`, `typeMedia`, `idPost`) VALUES (:nomFichier, :typeMedia, :idPost)');
+        $req->bindParam(':nomFichier', $nomFichier, PDO::PARAM_STR);
+        $req->bindParam(':typeMedia', $typeMedia, PDO::PARAM_STR);
+        $req->bindParam(':idPost', $idPost, PDO::PARAM_INT);
         $req->execute();
         return TRUE;
     } catch (Exception $ex) {
@@ -23,6 +35,16 @@ function GetAllPosts() {
         $req = $connect->prepare("SELECT * FROM posts ORDER BY datePost DESC");
         $req->execute();
         $result = $req->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return FALSE;
+    }
+    return $result;
+}
+
+function GetLastIdPost() {
+    try {
+        $connect = myDatabase();
+        $result = $connect->lastInsertId();
     } catch (Exception $ex) {
         return FALSE;
     }

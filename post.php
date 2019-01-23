@@ -10,20 +10,27 @@ include './server/database/function.inc.php';
 if (isset($_POST['send'])) {
     if (isset($_FILES) && is_array($_FILES) && count($_FILES) > 0) {
         $commentaire = $_POST['comment'];
-
-        $file = $_FILES['myImage'];
-
-        $fileName = $file['name'];
-        $fileType = $file['type'];
         $currentDate = date('Y-m-d H:i:s');
-        if (move_uploaded_file($file['tmp_name'], 'uploads/' . $fileName)) {
-            if (InsertPost($commentaire, $fileType, $fileName, $currentDate)) {
-                header('Location: index.php');
+        if (!InsertPost($commentaire, $currentDate)) {
+            echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+        }
+        
+        $files = $_FILES['myImage'];
+        
+        for ($i = 0; $i < count($files['name']); $i++) {
+            $fileName = $files['name'][$i];
+            $fileType = $files['type'][$i];
+
+            if (move_uploaded_file($files['tmp_name'][$i], 'uploads/' . $fileName)) {
+                $idPost = GetLastIdPost();
+                if (InsertMedia($fileName, $fileType, $idPost)) {
+                    header('Location: index.php');
+                } else {
+                    echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+                }
             } else {
-                echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+                echo '<h2>Erreur lors de l\'upload du fichier</h2>';
             }
-        } else {
-            echo '<h2>Erreur lors de l\'upload du fichier</h2>';
         }
     }
 }
@@ -49,7 +56,7 @@ if (isset($_POST['send'])) {
                 </tr>
                 <tr>
                     <td><textarea cols='50' rows='5' name='comment' required></textarea>
-                    <td><input type='file' name='myImage' accept='image/jpeg, image/png, image/gif, image/jpg'></td>
+                    <td><input type='file' name='myImage[]' accept='image/jpeg, image/png, image/gif, image/jpg' multiple></td>
                 </tr>
                 <tr>
                     <td><input type='submit' name='send' value='Poster'></td>
