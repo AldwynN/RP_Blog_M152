@@ -1,0 +1,72 @@
+/* 
+    Created on : 30 janv. 2019, 13:30:59
+    Author     : Peretti Romain
+*/
+
+#nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#nav li {
+    float: left;
+}
+
+#nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#nav li a:hover {
+    background-color: #111;
+}
+
+#profil{
+    border: 1px solid black;
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+}
+
+.sectionGlobal{
+    border: 1px solid black;
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+}
+
+.sectionGlobal form{
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    width: 40%;
+}
+
+#sectPost{
+    width: 100%;
+    height: 80%;
+    margin: auto;
+}
+
+.post{
+    display: block;
+    float: left;
+    width: 32%;
+    height: 32%;
+    border: 1px solid black;
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+}
+
+.imagePost{
+    width: 25%;
+    height: 25%;
+    margin: 5px;
+}

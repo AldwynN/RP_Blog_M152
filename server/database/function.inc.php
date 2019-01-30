@@ -9,10 +9,11 @@ function InsertPost($commentaire, $date) {
         $req->bindParam(':commentaire', $commentaire, PDO::PARAM_STR);
         $req->bindParam(':date', $date);
         $req->execute();
-        return TRUE;
+        $result = $connect->lastInsertId();
     } catch (Exception $ex) {
         return FALSE;
     }
+    return $result;
 }
 
 function InsertMedia($nomFichier, $typeMedia, $idPost) {
@@ -32,7 +33,7 @@ function InsertMedia($nomFichier, $typeMedia, $idPost) {
 function GetAllPosts() {
     try {
         $connect = myDatabase();
-        $req = $connect->prepare("SELECT * FROM posts ORDER BY datePost DESC");
+        $req = $connect->prepare("SELECT * FROM `posts` ORDER BY datePost DESC");
         $req->execute();
         $result = $req->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
@@ -41,10 +42,13 @@ function GetAllPosts() {
     return $result;
 }
 
-function GetLastIdPost() {
+function GetMediasByIdPost($idPost){
     try {
         $connect = myDatabase();
-        $result = $connect->lastInsertId();
+        $req = $connect->prepare("SELECT * FROM `medias` WHERE idPost = :idPost");
+        $req->bindParam(':idPost', $idPost, PDO::PARAM_INT);
+        $req->execute();
+        $result = $req->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
         return FALSE;
     }

@@ -11,37 +11,26 @@ include './server/database/function.inc.php';
 <html lang='fr'>
     <head>
         <meta charset="UTF-8">
+        <link href="css/cssGlobal.css" rel="stylesheet" type="text/css"/>
         <title>Home</title>
     </head>
     <body>
-        <nav>
-            <ul>
-                <li><a href='#'>Home</a></li>
-                <li><a href='post.php'>Post</a></li>
-            </ul>
-        </nav>
+        <?php include './server/inc/nav.inc.php'; ?>
         <!-- Section pour la photo de profile -->
-        <section>
+        <section id="profil">
             <image src='https://fr.cdn.v5.futura-sciences.com/buildsv6/images/mediumoriginal/6/5/2/652a7adb1b_98148_01-intro-773.jpg' alt='Photo de profil' height='70' width='110'>
             <h3>Romain Peretti</h3>
         </section>
 
         <!-- Section pour le message d'accueil -->
-        <section>
+        <section class="sectionGlobal">
             <h1>Bienvenue sur ma page magnifique !</h1>
         </section>
 
         <!-- Section pour les posts de l'utilisateur -->
-        <section>
+        <section id="sectPost">
             <?php
-            $posts = GetAllPosts();
-
-            foreach ($posts as $value) {
-                echo '<figure>'
-                . '<img src="uploads/' . $value['nomMedia'] . '" alt="Image du post" width="200" height="200" />'
-                . '<figcaption>' . $value['commentaire'] . '</figcaption>'
-                . '</figure>';
-            }
+            include './server/inc/post.inc.php';
             ?>
         </section>
     </body>
