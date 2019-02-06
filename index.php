@@ -26,7 +26,6 @@ include './server/database/function.inc.php';
         <section class="sectionGlobal">
             <h1>Bienvenue sur ma page magnifique !</h1>
         </section>
-
         <!-- Section pour les posts de l'utilisateur -->
         <section id="sectPost">
             <?php
