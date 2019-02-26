@@ -19,7 +19,9 @@ if (isset($_POST['sendPhoto'])) {
         $cptErreur = 0;
 
         for ($i = 0; $i < count($files['name']); $i++) {
-            $fileName = $files['name'][$i];
+            //$fileName = $files['name'][$i]; 
+            //Création d'un nom de fichier unique
+            $fileName = uniqid();
             $fileType = $files['type'][$i];
 
             if (move_uploaded_file($files['tmp_name'][$i], 'uploads/' . $fileName)) {
@@ -30,15 +32,8 @@ if (isset($_POST['sendPhoto'])) {
                 }
             } else {
                 echo '<h2>Erreur lors de l\'upload du fichier</h2>';
-                //$cptErreur++;
             }
         }
-       /*if ($cptErreur == 0) {
-            header('Location: index.php');
-        }else{
-            echo "<h1>Erreur</h1>";
-        }*/
-        
     }
 }
 
