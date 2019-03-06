@@ -12,11 +12,10 @@ if (isset($_POST['sendPhoto'])) {
         $commentaire = $_POST['commentPhoto'];
         $currentDate = date('Y-m-d H:i:s');
         if (($idPost = InsertPost($commentaire, $currentDate)) == FALSE) {
-            echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+            echo '<h2>Erreur lors de l\'ajout en base de données (Post)</h2>';
         }
         
         $files = $_FILES['myImage'];
-        $cptErreur = 0;
 
         for ($i = 0; $i < count($files['name']); $i++) {
             //$fileName = $files['name'][$i]; 
@@ -26,9 +25,10 @@ if (isset($_POST['sendPhoto'])) {
 
             if (move_uploaded_file($files['tmp_name'][$i], 'uploads/' . $fileName)) {
                 if (InsertMedia($fileName, $fileType, $idPost)) {
+                    header('Location: index.php');
                 } else {
-                    echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
-                    header('Location: index.php');//$cptErreur++;
+                    echo '<h2>Erreur lors de l\'ajout en base de données (Media)</h2>';
+                    //$cptErreur++;
                 }
             } else {
                 echo '<h2>Erreur lors de l\'upload du fichier</h2>';
@@ -42,20 +42,20 @@ if (isset($_POST['sendVideo'])) {
         $commentaire = $_POST['commentVideo'];
         $currentDate = date('Y-m-d H:i:s');
         if (($idPost = InsertPost($commentaire, $currentDate)) == FALSE) {
-            echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+            echo '<h2>Erreur lors de l\'ajout en base de données (Post)</h2>';
         }
         
         $files = $_FILES['myVideo'];
 
         for ($i = 0; $i < count($files['name']); $i++) {
-            $fileName = $files['name'][$i];
+            $fileName = uniqid();//$ files['name'][$i];
             $fileType = $files['type'][$i];
 
             if (move_uploaded_file($files['tmp_name'][$i], 'uploads/' . $fileName)) {
                 if (InsertMedia($fileName, $fileType, $idPost)) {
                     header('Location: index.php');
                 } else {
-                    echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+                    echo '<h2>Erreur lors de l\'ajout en base de données (Media)</h2>';
                 }
             } else {
                 echo '<h2>Erreur lors de l\'upload du fichier</h2>';
@@ -69,20 +69,20 @@ if (isset($_POST['sendAudio'])) {
         $commentaire = $_POST['commentAudio'];
         $currentDate = date('Y-m-d H:i:s');
         if (($idPost = InsertPost($commentaire, $currentDate)) == FALSE) {
-            echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+            echo '<h2>Erreur lors de l\'ajout en base de données (Post)</h2>';
         }
         
         $files = $_FILES['myAudio'];
 
         for ($i = 0; $i < count($files['name']); $i++) {
-            $fileName = $files['name'][$i];
+            $fileName = uniqid();//$files['name'][$i];
             $fileType = $files['type'][$i];
 
             if (move_uploaded_file($files['tmp_name'][$i], 'uploads/' . $fileName)) {
                 if (InsertMedia($fileName, $fileType, $idPost)) {
                     header('Location: index.php');
                 } else {
-                    echo '<h2>Erreur lors de l\'ajout en base de données</h2>';
+                    echo '<h2>Erreur lors de l\'ajout en base de données (Media)</h2>';
                 }
             } else {
                 echo '<h2>Erreur lors de l\'upload du fichier</h2>';
