@@ -14,7 +14,7 @@ foreach ($posts as $value) {
             echo '<img class="imagePost" src="uploads/' . $medias[$index]['nomFichierMedia'] . '" alt="Image du post" />';
         }
         if (\strpos($medias[$index]['typeMedia'], 'video') !== FALSE) {
-            echo '<video width="320" height="240" autoplay controls><source src="uploads/' . $medias[$index]['nomFichierMedia'] . '" type="' . $medias[$index]['typeMedia'] . '"></video>';
+            echo '<video width="320" height="240" loop autoplay controls><source src="uploads/' . $medias[$index]['nomFichierMedia'] . '" type="' . $medias[$index]['typeMedia'] . '"></video>';
         }
         if (\strpos($medias[$index]['typeMedia'], 'audio') !== FALSE) {
             echo '<audio controls src="uploads/' . $medias[$index]['nomFichierMedia'] . '" type="' . $medias[$index]['typeMedia'] . '">Your browser does not support the <code>audio</code> element.</audio>';
@@ -22,8 +22,7 @@ foreach ($posts as $value) {
     }
 
     echo '<figcaption>' . $value['commentaire'] . '</figcaption>'
-    . '<figcaption>Posté le '
-    . $value['datePost']
-    . '</figcaption>'
+    . '<figcaption>Posté le ' . $value['datePost'] . '</figcaption>'
+    . '<figcaption><a href="deletePost.php?idPost=' . $value['idPost'] . '">Supprimer</a></figcaption>'
     . '</figure>';
 }
